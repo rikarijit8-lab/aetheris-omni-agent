@@ -20,6 +20,46 @@
 
 ---
 
+## 🧑‍⚖️ Step-by-Step Evaluation Guide for Judges (How to Test the Demo)
+
+Welcome Amazon Developer Hackathon Judges! You can evaluate **Aetheris Omni-Agent** using either the video walkthrough or by running the full interactive live multi-device studio locally in under 60 seconds:
+
+### Quick Evaluation Path (Under 2 Minutes)
+1. **Watch Demo Video**: See [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) for the 2:45 second-by-second video script submitted on Devpost.
+2. **Run Locally**:
+   ```bash
+   git clone https://github.com/rikarijit8-lab/aetheris-omni-agent.git
+   cd aetheris-omni-agent
+   pip install -r requirements.txt
+   python run.py
+   ```
+3. **Open Studio**: Open `http://localhost:8000` in Google Chrome or Microsoft Edge.
+
+### Step-by-Step Testing Checklist on `http://localhost:8000`:
+- **Step 1 (Test 1-Click Scenarios)**:
+  - Click **`📅 Calendar Collision`**: Watch Alexa+ detect the meeting collision via MCP tool `check_schedule_conflicts`, automatically move the overlapping session to 2:00 PM, and push the updated agenda to the Fire TV canvas.
+  - Click **`📦 Courier & Restock`**: Watch Ring Video Doorbell verify an Amazon courier, temporarily disengage the smart deadbolt for 60 seconds, and trigger an Amazon 1-Click Prime restock order with an animated receipt.
+  - Click **`🧘 Stress -> Ambience`**: Watch Bee Wearable telemetry report elevated cognitive load (78%), triggering 5,500K daylight focus lighting and muting secondary chimes.
+  - Click **`✨ Full Symphony`**: Watch all 4 devices orchestrate simultaneously.
+- **Step 2 (Test Alexa+ Voice & Mic)**:
+  - Click the **Alexa Voice Orb** or microphone button (allow browser mic permissions if prompted).
+  - Speak naturally (e.g. *"Order coffee"*, *"Check my schedule"*, or *"Set focus ambience"*).
+  - Alexa will speak back via voice synthesis and display dynamic UI cards.
+- **Step 3 (Inspect Device Hub Tabs)**:
+  - Click through the top tabs on the right:
+    - **`📅 Calendar & Agenda`**: Live meeting timeline and collision solver status.
+    - **`🔔 Ring Security`**: 1080p HDR live camera stream, courier pass indicator, and deadbolt toggle.
+    - **`🐝 Bee Wearable`**: Biometric heart rate (BPM), cognitive stress progress bar, and ambient voice notes.
+    - **`📺 Fire TV Canvas`**: 4K Vega OS ambient card renderer and room lighting presets.
+    - **`📦 Supplies & Prime`**: 1-Click procurement catalog and live order tracking.
+- **Step 4 (Verify Model Context Protocol 2025-11-25 Specs)**:
+  - Click the bottom drawer: **`Model Context Protocol (MCP 2025-11-25) • Streamable HTTP Inspector`**.
+  - Review the real-time JSON-RPC 2.0 requests (`initialize`, `tools/list`, `tools/call`, SSE packets).
+- **Step 5 (Verify Database Records via CLI)**:
+  - Open terminal and run: `python check_db.py` to inspect all 6 SQLite tables and records directly.
+
+---
+
 ## 💡 Executive Summary: Why Aetheris Stands Apart
 Most hackathon smart home entries build obvious, single-turn wrappers around static APIs: asking a question, receiving a text answer, or toggling a light switch.
 

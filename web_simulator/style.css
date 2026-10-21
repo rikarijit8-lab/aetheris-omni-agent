@@ -299,6 +299,12 @@ body {
     transform: scale(1.08);
 }
 
+.orb-sphere.recording {
+    background: radial-gradient(circle at 35% 35%, #f87171 0%, #ef4444 60%, #7f1d1d 100%);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+    animation: gentle-glow 0.8s infinite alternate ease-in-out;
+}
+
 .orb-status-area {
     flex: 1;
     display: flex;

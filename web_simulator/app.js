@@ -41,60 +41,116 @@ function switchDeviceTab(tabKey) {
 // SPEECH RECOGNITION & ALEXA+ VOICE SYNTHESIS
 // =====================================================================
 
-function initSpeechRecognition() {
+function createSpeechRecognizer() {
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRec) {
-        recognition = new SpeechRec();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
+    if (!SpeechRec) return null;
 
-        recognition.onstart = () => {
-            isRecording = true;
-            document.getElementById('btn-mic').classList.add('recording');
-            document.getElementById('agent-status-badge').textContent = 'Listening to speech...';
-            document.getElementById('waveform').classList.add('active');
-        };
+    const rec = new SpeechRec();
+    rec.continuous = false;
+    rec.interimResults = true; // Show live interim words as user speaks
+    rec.lang = 'en-US';
 
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            document.getElementById('user-input').value = transcript;
-            handleUserQuery(transcript);
-        };
+    rec.onstart = () => {
+        isRecording = true;
+        document.getElementById('btn-mic').classList.add('recording');
+        document.getElementById('alexa-orb').classList.add('recording');
+        document.getElementById('agent-status-badge').textContent = 'Listening... Speak now!';
+        document.getElementById('user-input').placeholder = 'Listening to your voice... Speak now!';
+        document.getElementById('waveform').classList.add('active');
+    };
 
-        recognition.onerror = (event) => {
-            console.warn('Speech error:', event.error);
-            stopVoiceRecording();
-        };
+    rec.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
 
-        recognition.onend = () => {
-            stopVoiceRecording();
-        };
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+                finalTranscript += event.results[i][0].transcript;
+            } else {
+                interimTranscript += event.results[i][0].transcript;
+            }
+        }
+
+        const currentText = finalTranscript || interimTranscript;
+        if (currentText) {
+            document.getElementById('user-input').value = currentText;
+        }
+
+        if (finalTranscript) {
+            handleUserQuery(finalTranscript);
+        }
+    };
+
+    rec.onerror = (event) => {
+        console.warn('Speech recognition error:', event.error);
+        const badge = document.getElementById('agent-status-badge');
+        if (event.error === 'not-allowed') {
+            alert('Microphone access was blocked! Please click the camera/mic icon or lock icon in your browser address bar and select "Allow" for microphone.');
+            if (badge) badge.textContent = 'Mic Blocked (Allow in Address Bar)';
+        } else if (event.error === 'no-speech') {
+            if (badge) badge.textContent = 'No voice detected. Click mic to try again.';
+        } else {
+            if (badge) badge.textContent = `Mic Error: ${event.error}`;
+        }
+        stopVoiceRecording();
+    };
+
+    rec.onend = () => {
+        stopVoiceRecording();
+    };
+
+    return rec;
+}
+
+function initSpeechRecognition() {
+    recognition = createSpeechRecognizer();
+    if (!recognition) {
+        console.warn('Web Speech Recognition API not natively supported in this browser. Text input remains active.');
     }
 }
 
 function toggleVoiceRecording() {
-    if (!recognition) {
-        alert('Voice speech recognition is active in Chromium browsers (Chrome, Edge). You can also type directly in the composer below!');
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
+        alert('Voice speech recognition requires a Chromium browser (Chrome, Edge, Brave). You can type directly in the text composer below!');
         return;
     }
+
     if (isRecording) {
-        recognition.stop();
+        if (recognition) {
+            try { recognition.stop(); } catch (e) {}
+        }
         stopVoiceRecording();
     } else {
+        // Create fresh recognizer on click to guarantee clean state
         try {
-            recognition.start();
+            recognition = createSpeechRecognizer();
+            if (recognition) {
+                recognition.start();
+            }
         } catch (e) {
-            console.error(e);
+            console.error('Error starting speech recognition:', e);
+            stopVoiceRecording();
         }
     }
 }
 
 function stopVoiceRecording() {
     isRecording = false;
-    document.getElementById('btn-mic').classList.remove('recording');
-    document.getElementById('agent-status-badge').textContent = 'Ready • Listening';
-    document.getElementById('waveform').classList.remove('active');
+    const btn = document.getElementById('btn-mic');
+    if (btn) btn.classList.remove('recording');
+    const orb = document.getElementById('alexa-orb');
+    if (orb) orb.classList.remove('recording');
+    const input = document.getElementById('user-input');
+    if (input) input.placeholder = "Ask Alexa+, e.g. 'Coffee is low and the courier is at the Ring door...'";
+    const badge = document.getElementById('agent-status-badge');
+    if (badge && !badge.textContent.includes('Speaking') && !badge.textContent.includes('Reasoning')) {
+        badge.textContent = 'Ready • Listening';
+    }
+    const wave = document.getElementById('waveform');
+    if (wave && (!badge || !badge.textContent.includes('Speaking'))) {
+        wave.classList.remove('active');
+    }
 }
 
 function speakAlexaResponse(text) {
