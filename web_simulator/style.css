@@ -629,6 +629,7 @@ body {
     height: 7px;
     border-radius: 50%;
 }
+.tab-dot.calendar { background: #38bdf8; }
 .tab-dot.ring { background: var(--ring-blue); }
 .tab-dot.bee { background: var(--bee-amber); }
 .tab-dot.firetv { background: var(--firetv-violet); }
@@ -694,6 +695,7 @@ body {
     border-radius: 6px;
 }
 
+.calendar-badge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
 .ring-badge { background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.3); }
 .bee-badge { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
 .firetv-badge { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
@@ -721,6 +723,101 @@ body {
     color: var(--bee-amber);
     border: 1px solid rgba(245, 158, 11, 0.3);
 }
+
+.schedule-status-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--emerald-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.calendar-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.timeline-event-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.timeline-event-card:hover {
+    background: var(--bg-elevated);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.timeline-event-card.conflict {
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.timeline-event-card.rescheduled {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.event-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.event-time-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 6px 10px;
+    text-align: center;
+    min-width: 90px;
+}
+
+.event-time-badge .time-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: #38bdf8;
+    display: block;
+}
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.event-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.event-sub {
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    display: flex;
+    gap: 10px;
+}
+
+.event-tag-status {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+.event-tag-status.confirmed { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.event-tag-status.rescheduled { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+.event-tag-status.conflict { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
 .telemetry-pill {
     font-size: 0.7rem;

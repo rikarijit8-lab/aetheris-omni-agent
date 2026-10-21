@@ -4,7 +4,7 @@
  */
 
 // Global State
-let activeTab = 'ring';
+let activeTab = 'calendar';
 let currentFilter = 'ALL';
 let isRecording = false;
 let recognition = null;
@@ -172,11 +172,13 @@ async function handleUserQuery(text) {
 
         // Auto-switch tab based on content
         const lower = text.toLowerCase();
-        if (lower.includes('ring') || lower.includes('door') || lower.includes('courier')) {
+        if (lower.includes('calendar') || lower.includes('schedule') || lower.includes('meeting') || lower.includes('conflict')) {
+            switchDeviceTab('calendar');
+        } else if (lower.includes('ring') || lower.includes('door') || lower.includes('courier')) {
             switchDeviceTab('ring');
         } else if (lower.includes('bee') || lower.includes('stress') || lower.includes('biometric')) {
             switchDeviceTab('bee');
-        } else if (lower.includes('firetv') || lower.includes('tv') || lower.includes('calendar') || lower.includes('schedule') || lower.includes('ambience')) {
+        } else if (lower.includes('firetv') || lower.includes('tv') || lower.includes('ambience')) {
             switchDeviceTab('firetv');
         } else if (lower.includes('coffee') || lower.includes('paper') || lower.includes('order') || lower.includes('buy') || lower.includes('procure')) {
             switchDeviceTab('procure');
@@ -375,6 +377,60 @@ async function refreshSystemState() {
     try {
         const res = await fetch('/api/state');
         const state = await res.json();
+
+        // 0. Calendar & Schedule Timeline
+        if (state.schedule && state.schedule.length > 0) {
+            const timeline = document.getElementById('calendar-timeline');
+            if (timeline) {
+                timeline.innerHTML = '';
+                state.schedule.forEach(event => {
+                    const isCollision = event.id === 2 && event.start_time.startsWith('13:30');
+                    const isRescheduled = event.id === 2 && event.start_time.startsWith('14:00');
+                    const cardClass = isCollision ? 'conflict' : (isRescheduled ? 'rescheduled' : '');
+                    const tagStatus = isCollision ? '<span class="event-tag-status conflict">Time Collision</span>' : 
+                                     (isRescheduled ? '<span class="event-tag-status rescheduled">Auto-Rescheduled</span>' : 
+                                     '<span class="event-tag-status confirmed">Confirmed</span>');
+
+                    const itemHtml = `
+                        <div class="timeline-event-card ${cardClass}">
+                            <div class="event-left">
+                                <div class="event-time-badge">
+                                    <span class="time-text">${event.start_time} - ${event.end_time}</span>
+                                </div>
+                                <div class="event-details">
+                                    <h4 class="event-title">${event.title}</h4>
+                                    <div class="event-sub">
+                                        <span>📍 ${event.location || 'Executive Studio'}</span>
+                                        <span>👥 ${event.participants || 'Team'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-right">
+                                ${tagStatus}
+                            </div>
+                        </div>
+                    `;
+                    timeline.insertAdjacentHTML('beforeend', itemHtml);
+                });
+
+                const hasCollision = state.schedule.some(e => e.id === 2 && e.start_time.startsWith('13:30'));
+                const summaryEl = document.getElementById('schedule-conflict-summary');
+                const pillEl = document.getElementById('schedule-status-pill');
+                if (summaryEl) {
+                    summaryEl.textContent = hasCollision ? 
+                        "Collision: Operations Sync overlaps Keynote at 1:30 PM." : 
+                        "All schedules optimized. Operations Sync shifted to 2:00 PM.";
+                }
+                if (pillEl) {
+                    pillEl.textContent = hasCollision ? "Conflict Flagged" : "3 Sessions • Conflict Solved";
+                    pillEl.className = hasCollision ? "schedule-status-pill warning" : "schedule-status-pill";
+                }
+                const gridCal = document.getElementById('grid-calendar-text');
+                if (gridCal) {
+                    gridCal.textContent = hasCollision ? "1 Collision Flagged" : "3 Sessions • Collisions Solved";
+                }
+            }
+        }
 
         // 1. Ring
         if (state.ring_events && state.ring_events.length > 0) {

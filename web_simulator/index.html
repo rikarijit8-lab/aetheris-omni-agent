@@ -135,7 +135,10 @@
             <!-- DEVICE SELECTOR TABS -->
             <div class="hub-tabs-header">
                 <div class="tabs-nav">
-                    <button class="nav-tab active" id="tab-ring" onclick="switchDeviceTab('ring')">
+                    <button class="nav-tab active" id="tab-calendar" onclick="switchDeviceTab('calendar')">
+                        <span class="tab-dot calendar"></span> Calendar &amp; Agenda
+                    </button>
+                    <button class="nav-tab" id="tab-ring" onclick="switchDeviceTab('ring')">
                         <span class="tab-dot ring"></span> Ring Security
                     </button>
                     <button class="nav-tab" id="tab-bee" onclick="switchDeviceTab('bee')">
@@ -160,8 +163,33 @@
 
             <!-- DEVICE PANELS -->
             <div class="hub-content-viewport">
+                <!-- 0. CALENDAR & AGENDA PANEL -->
+                <div class="device-panel active" id="panel-calendar">
+                    <div class="panel-card-head">
+                        <div class="card-head-info">
+                            <span class="badge calendar-badge">Executive Schedule</span>
+                            <h3 class="panel-card-title">Live Synced Calendar &bull; Collision Solver</h3>
+                        </div>
+                        <span class="schedule-status-pill" id="schedule-status-pill">3 Sessions &bull; Conflict Solved</span>
+                    </div>
+
+                    <div class="calendar-timeline" id="calendar-timeline">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <div class="panel-card-foot">
+                        <div class="foot-stat">
+                            <span class="stat-caption">Autonomous Conflict Engine</span>
+                            <span class="stat-value" id="schedule-conflict-summary">Schedule verified via MCP check_schedule_conflicts</span>
+                        </div>
+                        <button class="btn-outline-action" onclick="triggerScenario('resolve_calendar_conflict')">
+                            Auto-Resolve Collision
+                        </button>
+                    </div>
+                </div>
+
                 <!-- 1. RING PANEL -->
-                <div class="device-panel active" id="panel-ring">
+                <div class="device-panel" id="panel-ring">
                     <div class="panel-card-head">
                         <div class="card-head-info">
                             <span class="badge ring-badge">Ring Platform</span>
@@ -323,6 +351,15 @@
                 <!-- 5. GRID OVERVIEW PANEL -->
                 <div class="device-panel" id="panel-all">
                     <div class="overview-grid">
+                        <div class="mini-card" onclick="switchDeviceTab('calendar')">
+                            <div class="mini-card-head">
+                                <span class="badge calendar-badge">Schedule</span>
+                                <span class="mini-status online">Synced</span>
+                            </div>
+                            <h4 class="mini-title">Executive Calendar</h4>
+                            <p class="mini-text" id="grid-calendar-text">3 Meetings &bull; Conflicts Resolved</p>
+                        </div>
+
                         <div class="mini-card" onclick="switchDeviceTab('ring')">
                             <div class="mini-card-head">
                                 <span class="badge ring-badge">Ring</span>
