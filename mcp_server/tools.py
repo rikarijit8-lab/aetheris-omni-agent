@@ -6,6 +6,7 @@ Multi-Device Ecosystem: Alexa+, Ring, Bee Wearable AI, Fire TV, AWS Bedrock
 import sqlite3
 import json
 import os
+import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
 
@@ -157,7 +158,7 @@ def check_schedule_conflicts(date_str: str = "today") -> Dict[str, Any]:
         cur = events[i]
         nxt = events[i+1]
         
-        # Calculate overlap
+        # Overlap calculation
         if cur["end_time"] > nxt["start_time"]:
             conflicts.append({
                 "event_a": cur,
@@ -241,7 +242,7 @@ def auto_procure_supplies(item_name: str, quantity: int = 1) -> Dict[str, Any]:
     current_stock = row["stock"]
     unit_price = row["unit_price"]
     
-    order_id = f"AMZN-1CLK-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+    order_id = f"AMZN-1CLK-{datetime.now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:6].upper()}"
     total = round(unit_price * quantity, 2)
     timestamp = datetime.now().isoformat()
     est_delivery = (datetime.now() + timedelta(hours=2)).strftime("%I:%M %p (Same-Day Prime)")
@@ -367,7 +368,7 @@ def ring_grant_access(duration_seconds: int = 60, reason: str = "Authorized cour
         "reason": reason,
         "duration_seconds": duration_seconds,
         "auto_relock_at": (datetime.now() + timedelta(seconds=duration_seconds)).strftime("%H:%M:%S"),
-        "security_log": f"Courier entry permitted. Ring camera recording continuous 1080p security buffer."
+        "security_log": "Courier entry permitted. Ring camera recording continuous 1080p security buffer."
     }
 
 def bee_get_wearable_telemetry() -> Dict[str, Any]:
