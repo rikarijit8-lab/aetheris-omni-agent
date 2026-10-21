@@ -495,3 +495,4 @@ function escapeHtml(string) {
     div.innerText = string;
     return div.innerHTML;
 }
+

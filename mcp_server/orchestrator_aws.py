@@ -416,3 +416,4 @@ class BedrockAgentOrchestrator:
 
 # Global singleton
 agent_orchestrator = BedrockAgentOrchestrator()
+

@@ -23,3 +23,4 @@
 2. **Audio**: Use a clear microphone. Keep background noise muted.
 3. **Pacing**: Speak at a confident, enthusiastic, steady pace.
 4. **Link**: Upload as Unlisted or Public on YouTube/Vimeo and paste the link in your Devpost submission form.
+

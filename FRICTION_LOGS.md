@@ -93,3 +93,4 @@
   Designed dedicated MCP App container cards with decoupled DOM insertions, slide-up keyframe animations, and strict CSS grid isolation.
 - **Actionable Suggestion for Fire TV & Vega OS Team**:  
   Provide an official React/Web SDK for Vega OS Ambient Canvas with built-in queueing and transition components for cross-device card pushes.
+

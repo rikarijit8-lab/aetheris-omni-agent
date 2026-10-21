@@ -253,3 +253,4 @@ class StateManager:
 
 # Global singleton
 state_manager = StateManager()
+

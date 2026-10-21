@@ -28,3 +28,4 @@
 - **Priority**: **Nice-to-have**
 - **Description**: A native connector in AWS Bedrock AgentCore that allows an agent to register an external `https://.../mcp` Streamable HTTP endpoint as an action group with zero adapter code required.
 - **Why it matters**: Currently, developers write adapter code to transform MCP tool schemas into Bedrock Converse API format. Direct protocol support would make AWS Bedrock and Alexa+ MCP indistinguishable, creating the fastest deployment pipeline in cloud computing.
+
