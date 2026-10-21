@@ -18,3 +18,4 @@ if __name__ == "__main__":
     print("🖥️  Alexa+ Web Simulator & Studio: http://localhost:8000")
     print("="*70 + "\n")
     uvicorn.run("mcp_server.server:app", host="0.0.0.0", port=8000, reload=False)
+
