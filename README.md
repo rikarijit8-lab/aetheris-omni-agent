@@ -107,7 +107,7 @@ flowchart TD
 ### 1. Clone & Install Dependencies
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/aetheris-omni-agent.git
+git clone https://github.com/rikarijit8-lab/aetheris-omni-agent.git
 cd aetheris-omni-agent
 
 # Install dependencies
@@ -201,3 +201,4 @@ As required by the official hackathon rules, if this repository is set to privat
 ## 📜 Open Source License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
