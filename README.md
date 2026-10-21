@@ -25,7 +25,10 @@
 Welcome Amazon Developer Hackathon Judges! You can evaluate **Aetheris Omni-Agent** using either the video walkthrough or by running the full interactive live multi-device studio locally in under 60 seconds:
 
 ### Quick Evaluation Path (Under 2 Minutes)
-1. **Watch Demo Video**: See [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) for the 2:45 second-by-second video script submitted on Devpost.
+1. **Watch Demo Video**:
+   - 🎬 **Video File**: [`aetheris_demo_video.mp4`](aetheris_demo_video.mp4) (Duration: **2m 39s** | Full HD 1080p | Clear Spoken Narration + Real Telemetry).
+   - 📜 **Demo Script & Timestamps**: [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md).
+   - ⚡ **Automated Video Builder**: Re-generate anytime with `python generate_demo_video.py`.
 2. **Run Locally**:
    ```bash
    git clone https://github.com/rikarijit8-lab/aetheris-omni-agent.git

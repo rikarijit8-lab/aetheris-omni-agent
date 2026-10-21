@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from .tools import MCP_TOOL_DEFINITIONS, execute_tool, init_db
+from .tools import MCP_TOOL_DEFINITIONS, execute_tool, init_db, reset_db
 from .state_manager import state_manager
 from .orchestrator_aws import agent_orchestrator
 
@@ -361,6 +361,14 @@ async def api_scenario_endpoint(scenario_name: str):
     """Triggers scripted high-impact cross-device scenarios for demonstration."""
     result = await state_manager.run_scenario(scenario_name)
     return JSONResponse(content=result)
+
+@app.post("/api/reset")
+async def api_reset_endpoint():
+    """Resets SQLite database and devices to clean demonstration state."""
+    reset_db()
+    state = state_manager.get_system_state()
+    await state_manager.broadcast_event("state_sync", state)
+    return JSONResponse(content={"status": "reset_complete", "state": state})
 
 @app.post("/api/device/{device_id}/action")
 async def api_device_action(device_id: str, request: Request):

@@ -17,9 +17,18 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-def init_db():
+def init_db(force: bool = False):
     conn = get_db()
     cursor = conn.cursor()
+    
+    if force:
+        cursor.execute("DROP TABLE IF EXISTS schedule")
+        cursor.execute("DROP TABLE IF EXISTS inventory")
+        cursor.execute("DROP TABLE IF EXISTS orders")
+        cursor.execute("DROP TABLE IF EXISTS ring_events")
+        cursor.execute("DROP TABLE IF EXISTS bee_telemetry")
+        cursor.execute("DROP TABLE IF EXISTS firetv_canvas")
+        conn.commit()
     
     # 1. Schedule & Calendar table
     cursor.execute("""
@@ -135,6 +144,9 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+def reset_db():
+    init_db(force=True)
 
 # Initialize immediately
 init_db()
