@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetheris Omni-Agent | Amazon Developer Hackathon 2026</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <!-- TOP NAVIGATION -->
+    <header class="app-header">
+        <div class="header-brand">
+            <div class="brand-icon">
+                <span class="pulsing-dot"></span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 3v18"/>
+                    <path d="M3 12h18"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="brand-title">Aetheris <span class="gradient-text">Omni-Agent</span></h1>
+                <p class="brand-subtitle">Amazon Ecosystem Orchestrator • Alexa+ | Ring | Bee | Fire TV | AWS Bedrock</p>
+            </div>
+        </div>
+
+        <div class="header-badges">
+            <div class="device-pill online" id="pill-alexa">
+                <span class="status-indicator"></span>
+                <span class="pill-label">Alexa+ (MCP 2025-11-25)</span>
+            </div>
+            <div class="device-pill online" id="pill-ring">
+                <span class="status-indicator"></span>
+                <span class="pill-label">Ring Doorbell Pro</span>
+            </div>
+            <div class="device-pill online" id="pill-bee">
+                <span class="status-indicator"></span>
+                <span class="pill-label">Bee Wearable AI</span>
+            </div>
+            <div class="device-pill online" id="pill-firetv">
+                <span class="status-indicator"></span>
+                <span class="pill-label">Fire TV (Vega OS)</span>
+            </div>
+            <div class="device-pill aws-badge">
+                <span class="aws-icon">⚡</span>
+                <span class="pill-label">AWS Bedrock AgentCore</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="app-layout">
+        <!-- LEFT PANEL: ALEXA+ AGENTIC CONVERSATION & MCP ORB -->
+        <section class="panel agent-panel">
+            <div class="panel-header">
+                <div class="panel-title-group">
+                    <h2 class="panel-title">Alexa+ Multi-Modal Interaction</h2>
+                    <span class="panel-tag">Streamable HTTP SSE</span>
+                </div>
+                <div class="agent-mode-tag" id="agent-status-tag">READY &amp; LISTENING</div>
+            </div>
+
+            <!-- ALEXA+ VOICE VISUALIZER ORB -->
+            <div class="alexa-orb-container">
+                <div class="orb-glow-outer"></div>
+                <div class="orb-glow-inner"></div>
+                <div class="alexa-orb" id="alexa-orb">
+                    <div class="orb-ring ring-1"></div>
+                    <div class="orb-ring ring-2"></div>
+                    <div class="orb-ring ring-3"></div>
+                    <div class="orb-core">
+                        <svg class="mic-icon-svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" x2="12" y1="19" y2="22"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="waveform-visualizer" id="waveform">
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                </div>
+            </div>
+
+            <!-- CURATED HACKATHON SCENARIOS (Quick Test Buttons for Judges) -->
+            <div class="scenarios-bar">
+                <span class="scenarios-title">Judges One-Click Scenarios:</span>
+                <div class="chips-container">
+                    <button class="scenario-chip" onclick="triggerScenario('resolve_calendar_conflict')">
+                        📅 Auto-Resolve Calendar Conflict
+                    </button>
+                    <button class="scenario-chip" onclick="triggerScenario('courier_delivery_restock')">
+                        📦 Ring Courier + 1-Click Restock
+                    </button>
+                    <button class="scenario-chip" onclick="triggerScenario('bee_stress_focus_ambience')">
+                        🧘 Bee Stress Spike &rarr; Focus Ambience
+                    </button>
+                    <button class="scenario-chip highlight" onclick="triggerSymphony()">
+                        ✨ Complete Cross-Device Symphony
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONVERSATION & MULTI-MODAL FEED -->
+            <div class="conversation-feed" id="conversation-feed">
+                <!-- Welcome Card -->
+                <div class="chat-message agent-msg">
+                    <div class="message-meta">
+                        <span class="avatar alexa-avatar">A+</span>
+                        <span class="sender-name">Alexa+ Omni-Agent</span>
+                        <span class="msg-time">Just now</span>
+                    </div>
+                    <div class="message-bubble">
+                        <p>Welcome to <strong>Aetheris Omni-Agent</strong>! I am connected to your <strong>Alexa+</strong>, <strong>Ring Doorbell</strong>, <strong>Bee Wearable AI</strong>, and <strong>Fire TV</strong> via Model Context Protocol (MCP 2025-11-25) and AWS Bedrock.</p>
+                        <p>You can speak to me with your microphone, type below, or click any of the scenarios above to see autonomous multi-device orchestration in action!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT COMPOSER -->
+            <div class="composer-container">
+                <form id="chat-form" onsubmit="handleUserSubmit(event)">
+                    <div class="input-wrapper">
+                        <button type="button" class="btn-mic" id="btn-mic" onclick="toggleVoiceRecording()" title="Speak with Voice Recognition">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" x2="12" y1="19" y2="22"/>
+                            </svg>
+                        </button>
+                        <input type="text" id="user-input" placeholder="Ask Alexa+, e.g. 'Coffee is low and the courier is at the Ring door...'" autocomplete="off">
+                        <button type="submit" class="btn-send" id="btn-send">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" x2="11" y1="2" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: AMAZON CROSS-DEVICE ECOSYSTEM DASHBOARD -->
+        <section class="panel devices-panel">
+            <div class="panel-header">
+                <div class="panel-title-group">
+                    <h2 class="panel-title">Connected Amazon Device Telemetry</h2>
+                    <span class="panel-tag">Real-Time Sync</span>
+                </div>
+                <button class="btn-refresh" onclick="refreshSystemState()" title="Refresh State">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="devices-grid">
+                <!-- 1. RING VIDEO DOORBELL & SMART ACCESS -->
+                <div class="device-card ring-card">
+                    <div class="device-card-header">
+                        <div class="device-title-area">
+                            <span class="device-brand-badge ring-color">Ring</span>
+                            <h3 class="device-name">Video Doorbell Pro 2 &amp; Smart Deadbolt</h3>
+                        </div>
+                        <span class="device-status-badge active" id="ring-lock-status">LOCKED</span>
+                    </div>
+
+                    <div class="ring-viewport">
+                        <img id="ring-cam-image" src="/static/courier_drop.jpg" alt="Ring Camera Stream">
+                        <div class="live-rec-badge">
+                            <span class="rec-dot"></span> LIVE 1080p HDR
+                        </div>
+                        <div class="courier-verified-banner" id="courier-badge">
+                            <span class="verified-icon">✓</span> Amazon Prime Courier Verified
+                        </div>
+                    </div>
+
+                    <div class="device-controls">
+                        <div class="control-row">
+                            <span class="control-label">Smart Access Deadbolt</span>
+                            <button class="btn-device-action" id="btn-toggle-deadbolt" onclick="toggleSmartDeadbolt()">
+                                Disengage 60s
+                            </button>
+                        </div>
+                        <div class="device-stat-text" id="ring-event-text">
+                            Latest: Amazon Courier detected at front porch
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. BEE WEARABLE AI (Wristband Context & Biometrics) -->
+                <div class="device-card bee-card">
+                    <div class="device-card-header">
+                        <div class="device-title-area">
+                            <span class="device-brand-badge bee-color">Bee</span>
+                            <h3 class="device-name">Bee Wearable AI Wristband</h3>
+                        </div>
+                        <span class="device-status-badge active">PAIRED</span>
+                    </div>
+
+                    <div class="bee-biometrics-container">
+                        <div class="biometric-tile">
+                            <span class="bio-icon">❤️</span>
+                            <div class="bio-data">
+                                <span class="bio-value" id="bee-hr">82 <small>BPM</small></span>
+                                <span class="bio-label">Resting Heart Rate</span>
+                            </div>
+                        </div>
+                        <div class="biometric-tile">
+                            <span class="bio-icon">⚡</span>
+                            <div class="bio-data">
+                                <span class="bio-value" id="bee-stress">78<small>%</small></span>
+                                <span class="bio-label">Cognitive Stress Index</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stress-bar-container">
+                        <div class="stress-bar-fill" id="stress-bar-fill" style="width: 78%;"></div>
+                    </div>
+
+                    <div class="bee-memo-box">
+                        <span class="memo-title">🎙️ Ambient Speech Memo:</span>
+                        <p class="memo-content" id="bee-memo-text">
+                            "Discussed Fire TV &amp; Alexa+ MCP launch milestones during hallway sync."
+                        </p>
+                    </div>
+
+                    <div class="bee-coach-pill" id="bee-coach-pill">
+                        💡 <strong>Wrist Coach:</strong> High cognitive load detected. Workspace Focus Mode recommended.
+                    </div>
+                </div>
+
+                <!-- 3. FIRE TV MULTIMODAL CANVAS (Vega OS Screen) -->
+                <div class="device-card firetv-card">
+                    <div class="device-card-header">
+                        <div class="device-title-area">
+                            <span class="device-brand-badge firetv-color">Fire TV</span>
+                            <h3 class="device-name">Omni Series (Vega OS Multimodal Screen)</h3>
+                        </div>
+                        <span class="device-status-badge active">CANVAS ON</span>
+                    </div>
+
+                    <div class="firetv-canvas-screen">
+                        <div class="firetv-bezel">
+                            <div class="canvas-content" id="canvas-content">
+                                <div class="canvas-tag">MCP APP DISPLAY</div>
+                                <h4 class="canvas-headline" id="canvas-headline">Aetheris Ambient Studio Active</h4>
+                                <p class="canvas-body" id="canvas-body">Alexa+, Ring, Bee, and Fire TV connected seamlessly via Amazon MCP 2025-11-25.</p>
+                                <div class="canvas-meta" id="canvas-meta">Resolution: 3840x2160 • Vega OS 1.0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="device-controls">
+                        <div class="control-row">
+                            <span class="control-label">Living Room Ambience</span>
+                            <div class="ambience-pills">
+                                <button class="pill-btn active" onclick="setAmbience('focus_presentation')">Focus (5500K)</button>
+                                <button class="pill-btn" onclick="setAmbience('casual_collaboration')">Warm (3200K)</button>
+                                <button class="pill-btn" onclick="setAmbience('deep_relaxation')">Relax (2400K)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. AMAZON 1-CLICK PROCUREMENT & INVENTORY TRACKER -->
+                <div class="device-card inventory-card">
+                    <div class="device-card-header">
+                        <div class="device-title-area">
+                            <span class="device-brand-badge prime-color">Amazon Prime</span>
+                            <h3 class="device-name">1-Click Auto-Procurement &amp; Supplies</h3>
+                        </div>
+                        <span class="device-status-badge warning" id="inv-badge">2 SHORTAGES</span>
+                    </div>
+
+                    <div class="inventory-table-container">
+                        <table class="inv-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-tbody">
+                                <tr>
+                                    <td>Nespresso Dark Roast</td>
+                                    <td><span class="stock-pill low">2 pk</span></td>
+                                    <td>$28.50</td>
+                                    <td><button class="btn-table-order" onclick="reorderItem('coffee_pods')">1-Click Buy</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Multipurpose Paper</td>
+                                    <td><span class="stock-pill out">0 ream</span></td>
+                                    <td>$19.99</td>
+                                    <td><button class="btn-table-order" onclick="reorderItem('printer_paper')">1-Click Buy</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Disinfectant Wipes</td>
+                                    <td><span class="stock-pill low">1 pk</span></td>
+                                    <td>$14.25</td>
+                                    <td><button class="btn-table-order" onclick="reorderItem('sanitizing_wipes')">1-Click Buy</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="recent-orders-feed" id="recent-orders-feed">
+                        <div class="order-mini-chip">
+                            <span>📦 <strong>AMZN-1CLK-2026:</strong> Coffee Pods (2) &bull; Same-Day Prime</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BOTTOM DRAWER: REAL-TIME MCP PROTOCOL INSPECTOR (FOR DEVREL & JUDGES) -->
+    <footer class="inspector-drawer" id="inspector-drawer">
+        <div class="inspector-header" onclick="toggleInspector()">
+            <div class="inspector-title">
+                <span class="terminal-dot"></span>
+                <strong>MCP Spec 2025-11-25 Protocol Inspector</strong>
+                <span class="protocol-counter" id="protocol-counter">0 packets</span>
+            </div>
+            <div class="inspector-actions">
+                <span class="inspector-toggle-icon" id="inspector-arrow">&#9650;</span>
+            </div>
+        </div>
+        <div class="inspector-body" id="inspector-body">
+            <div class="inspector-toolbar">
+                <div class="filter-tabs">
+                    <button class="tab active" onclick="filterLogs('ALL')">ALL</button>
+                    <button class="tab" onclick="filterLogs('INCOMING')">INCOMING</button>
+                    <button class="tab" onclick="filterLogs('OUTGOING')">OUTGOING</button>
+                    <button class="tab" onclick="filterLogs('INTERNAL')">TOOLS &amp; BEDROCK</button>
+                </div>
+                <button class="btn-clear-logs" onclick="clearProtocolLogs()">Clear Logs</button>
+            </div>
+            <div class="inspector-logs" id="inspector-logs">
+                <div class="log-entry">
+                    <span class="log-time">[00:00:00.000]</span>
+                    <span class="log-dir in">INCOMING</span>
+                    <span class="log-method">initialize</span>
+                    <span class="log-preview">{"protocolVersion": "2025-11-25", "clientInfo": {"name": "AlexaPlusEngine"}}</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>

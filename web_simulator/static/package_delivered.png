@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+            <rect width="600" height="400" fill="#042f2e"/>
+            <rect x="250" y="130" width="100" height="80" rx="8" fill="#14b8a6" opacity="0.3"/>
+            <text x="300" y="250" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="20" font-weight="700" text-anchor="middle">AMAZON 1-CLICK ORDER DISPATCHED</text>
+            <text x="300" y="280" fill="#2dd4bf" font-family="system-ui, sans-serif" font-size="14" text-anchor="middle">Prime Express Delivery Confirmed</text>
+        </svg>
